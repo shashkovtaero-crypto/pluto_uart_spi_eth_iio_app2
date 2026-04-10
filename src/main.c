@@ -7,6 +7,7 @@
 #include "xgpiops.h"
 #include "xil_cache.h"
 
+extern void gpio_init(void);
 static XGpioPs gpio;
 static volatile int led_state = 0;
 /* Mutex дл€ UART Ч xil_printf не thread-safe */
@@ -83,6 +84,11 @@ int main(void)
 	XGpioPs_Config *gcfg = XGpioPs_LookupConfig(XPAR_PS7_GPIO_0_DEVICE_ID);
 	XGpioPs_CfgInitialize(&gpio, gcfg, gcfg->BaseAddr);
 
+	gpio_init();
+
+	uart_mutex = xSemaphoreCreateMutex();
+	configASSERT(uart_mutex);
+
     BaseType_t rc;
 
     xTaskCreate(task_led_blink,  "LED_Blink",  256, NULL, 2, NULL);
@@ -103,6 +109,8 @@ int main(void)
 
     vTaskStartScheduler();
 
+    /* Should never reach here */
+    xil_printf("Scheduler exited!\r\n");
     for (;;)
         ;
 }

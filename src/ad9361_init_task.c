@@ -9,6 +9,8 @@
 #include "xilinx_gpio.h"
 #include "xilinx_spi.h"
 #include "xil_printf.h"
+#include "xgpiops.h"
+#include "sleep.h"
 
 struct ad9361_rf_phy *ad9361_phy = NULL;
 
@@ -21,6 +23,30 @@ static struct xil_gpio_init_param xil_gpio_param = {
     .type = GPIO_PS,
     .device_id = GPIO_DEVICE_ID
 };
+
+static XGpioPs gpio_inst;
+
+void gpio_init(void)
+{
+    XGpioPs_Config *cfg = XGpioPs_LookupConfig(XPAR_PS7_GPIO_0_DEVICE_ID);
+    XGpioPs_CfgInitialize(&gpio_inst, cfg, cfg->BaseAddr);
+
+    XGpioPs_SetDirectionPin(&gpio_inst, GPIO_RESET_PIN, 1);
+    XGpioPs_SetOutputEnablePin(&gpio_inst, GPIO_RESET_PIN, 1);
+    XGpioPs_WritePin(&gpio_inst, GPIO_RESET_PIN, 1);
+
+    XGpioPs_SetDirectionPin(&gpio_inst, GPIO_LED_PIN, 1);
+    XGpioPs_SetOutputEnablePin(&gpio_inst, GPIO_LED_PIN, 1);
+    XGpioPs_WritePin(&gpio_inst, GPIO_LED_PIN, 0);
+
+    XGpioPs_SetDirectionPin(&gpio_inst, GPIO_ENABLE_PIN, 1);
+    XGpioPs_SetOutputEnablePin(&gpio_inst, GPIO_ENABLE_PIN, 1);
+    XGpioPs_WritePin(&gpio_inst, GPIO_ENABLE_PIN, 0);
+
+    XGpioPs_SetDirectionPin(&gpio_inst, GPIO_TXNRX_PIN, 1);
+    XGpioPs_SetOutputEnablePin(&gpio_inst, GPIO_TXNRX_PIN, 1);
+    XGpioPs_WritePin(&gpio_inst, GPIO_TXNRX_PIN, 0);
+}
 
 static AD9361_InitParam g_ad9361_init;
 
@@ -71,6 +97,15 @@ static void ad9361_fill_params(void)
 
 int ad9361_no_os_init(void)
 {
+	/* Hard reset AD9361 */
+	XGpioPs_WritePin(&gpio_inst, GPIO_ENABLE_PIN, 0);
+	XGpioPs_WritePin(&gpio_inst, GPIO_TXNRX_PIN, 0);
+	XGpioPs_WritePin(&gpio_inst, GPIO_RESET_PIN, 0);
+	usleep(10000);
+	XGpioPs_WritePin(&gpio_inst, GPIO_ENABLE_PIN, 1);
+	usleep(1000);
+	XGpioPs_WritePin(&gpio_inst, GPIO_RESET_PIN, 1);
+	usleep(200000);
     ad9361_fill_params();
     return ad9361_init(&ad9361_phy, &g_ad9361_init);
 }
