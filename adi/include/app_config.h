@@ -32,6 +32,7 @@
 *******************************************************************************/
 #ifndef CONFIG_H_
 #define CONFIG_H_
+#include "xil_printf.h"
 
 #define HAVE_SPLIT_GAIN_TABLE	1 /* only set to 0 in case split_gain_table_mode_enable = 0*/
 #define HAVE_TDD_SYNTH_TABLE	1 /* only set to 0 in case split_gain_table_mode_enable = 0*/
@@ -55,7 +56,8 @@
 
 #ifndef IIO_SUPPORT
 #define HAVE_VERBOSE_MESSAGES /* Recommended during development prints errors and warnings */
-//#define HAVE_DEBUG_MESSAGES /* For Debug purposes only */
+#define HAVE_DEBUG_MESSAGES /* For Debug purposes only */
+#define _DEBUG
 #endif // USE_LIBIIO
 /*
  * In case memory footprint is a concern these options allow

@@ -13,17 +13,12 @@ extern "C" {
 #define AXI_AD9361_REG_RSTN        AXI_AD9361_REG(0x0040)
 #define AXI_AD9361_REG_CNTRL       AXI_AD9361_REG(0x0044)
 
-#define GPIO_RESET_PIN             67U
-#define GPIO_ENABLE_PIN            69U
-#define GPIO_TXNRX_PIN             70U
-#define GPIO_LED_PIN               15U
-
 #define REG_PRODUCT_ID             0x037
 #define REG_PRODUCT_REV            0x038
 
-int     ad9361_lowlevel_axi_init(void);
-int     ad9361_no_os_init(void);
-int     ad9361_device_setup(void);
+void     ad9361_lowlevel_axi_init(void);
+void     ad9361_no_os_init(void);
+void     ad9361_device_setup(void);
 uint8_t ad9361_user_reg_read(uint16_t addr);
 int     ad9361_user_reg_write(uint16_t addr, uint8_t data);
 

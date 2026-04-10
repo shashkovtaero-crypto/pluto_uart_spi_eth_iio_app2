@@ -1,3 +1,4 @@
+#include "parameters.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
@@ -54,11 +55,7 @@ static void ad9361_task(void *arg)
     int ret;
     (void)arg;
 
-    ret = ad9361_device_setup();
-    if (ret)
-        xil_printf("AD9361 setup error: %d\r\n", ret);
-    else
-    	xil_printf("AD9361 setup sucess\r\n");
+    ad9361_device_setup();
 
     for (;;) {
         vTaskDelay(pdMS_TO_TICKS(1000));

@@ -545,12 +545,16 @@ int32_t ad9361_init(struct ad9361_rf_phy **ad9361_phy,
 	phy->ad9361_rfpll_ext_set_rate = init_param->ad9361_rfpll_ext_set_rate;
 
 	ret = ad9361_register_clocks(phy);
-	if (ret < 0)
-		goto out;
+	if (ret < 0) {
+	    printf("ad9361_init: fail in ad9361_register_clocks, ret=%d\r\n", (int)ret);
+	    goto out;
+	}
 
 	ret = ad9361_setup(phy);
-	if (ret < 0)
-		goto out_clk;
+	if (ret < 0) {
+	    printf("ad9361_init: fail in ad9361_setup, ret=%d\r\n", (int)ret);
+	    goto out_clk;
+	}
 
 #ifndef AXI_ADC_NOT_PRESENT
 	axi_adc_init(&phy->rx_adc, init_param->rx_adc_init);
