@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="pluto_uart_spi_eth_iio_app2" location="D:/vitis_workspace/pluto_uart_spi_eth_iio_app2" platform="D:/vitis_workspace/pluto_platform_adi/export/pluto_platform_adi/pluto_platform_adi.xpfm" platformUID="xilinx:::0.0(custom)" systemProject="pluto_uart_spi_eth_iio_app2_system" sysConfig="pluto_platform_adi" runtime="C/C++" cpu="freertos10_xilinx_ps7_cortexa9_0" cpuInstance="ps7_cortexa9_0" os="freertos10_xilinx" mssSignature="33635464f52d1057e38db0c0ef779462">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.850689226">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.365437300" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="empty_application"/>
+</sdkproject:SdkProject>
